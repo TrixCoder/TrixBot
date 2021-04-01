@@ -6,9 +6,7 @@ module.exports.run = async (client, message, args) => {
   if (!message.member.hasPermission("ADMINISTRATOR")) {
     return message.reply("You must need admin permission to use this command.");;
   }
-  if (!args[0]) return message.reply("You didn't specify a channel.");
-  if (!args[1]) return message.reply("You didn't specify a color.");
-  if (!args[2]) return message.reply("You didn't specify a Message.");
+  if (!args[0]) return message.reply("You didn't specify a Message.");
   else {
     let content = args.slice(0);
     let msg = "";
