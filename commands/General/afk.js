@@ -1,4 +1,5 @@
 let Afk = require('./../../models/afk.js')
+const {MessageEmbed} = require('discord.js');
 
 module.exports.run = async (client, message, args) => {
   let find = await Afk.findOne({ guild: message.guild.id, user: message.author.id });
@@ -22,7 +23,7 @@ module.exports.run = async (client, message, args) => {
         m += `${content[i]} `;
       }
     }
-    if(m.content.includes('@')){
+    if (m.content.includes('@')) {
       return message.channel.send(`You can't mention anyone in your afk message.`)
     }
     let afkmsg = args[0] ? m : 'AFK';
@@ -33,7 +34,13 @@ module.exports.run = async (client, message, args) => {
     });
     await newAfk.save();
     message.delete({ timeout: 1 });
-    message.channel.send(`${message.author} I set your AFK: ${afkmsg}`).then(m => {
+
+    let embed = new MessageEmbed()
+      .setColor('GREEN')
+      .setAuthor(msg.author.tag, msg.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
+      .setDescription(`${message.author} I set your AFK: ${afkmsg}`)
+
+    message.channel.send(embed).then(m => {
       m.delete({ timeout: 10000 });
     });
     return;
