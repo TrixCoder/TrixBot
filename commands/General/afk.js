@@ -13,7 +13,16 @@ module.exports.run = async (client, message, args) => {
     return;
   }
   else {
-    let afkmsg = args[0] ? args[0] : 'AFK';
+    let content = args.slice(0);
+    let m = "";
+    for (let i = 0; i < content.length; i++) {
+      if (i == content.length - 1) {
+        m += `${content[i]}`;
+      } else {
+        m += `${content[i]} `;
+      }
+    }
+    let afkmsg = args[0] ? m : 'AFK';
     let newAfk = new Afk({
       guild: message.guild.id,
       user: message.author.id,
