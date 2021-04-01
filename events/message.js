@@ -20,7 +20,7 @@ module.exports = async (client, msg) => {
         .setColor('RED')
         .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
-      return msg.channel.send(embe
+      return msg.channel.send(embed);
     }
   }
   //if(msg.content.includes())
