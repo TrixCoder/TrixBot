@@ -8,7 +8,13 @@ module.exports.run = async (client, message, args) => {
   }
   if (!args[0]) return message.reply("You didn't specify a Message.");
   else {
-    let content = args.slice(0);
+    let content;
+    if(['RED', 'BLUE', 'GREEN','PINK', 'BLACK', 'ORANGE', 'PURPLE', 'YELLOW'].includes(args[0])){
+      content  = args.slice(1);
+    }
+    else{
+      content  = args.slice(0);
+    }
     let msg = "";
     for (let i = 0; i < content.length; i++) {
       if (i == content.length - 1) {
@@ -18,7 +24,7 @@ module.exports.run = async (client, message, args) => {
       }
     }
     let embed = new MessageEmbed()
-      .setColor(args[1])
+      .setColor(args[0])
       .setDescription(msg);
     message.channel.send(embed);
   }
