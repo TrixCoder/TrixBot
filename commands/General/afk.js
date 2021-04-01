@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args) => {
 
     let embed = new MessageEmbed()
       .setColor('GREEN')
-      .setAuthor(msg.author.tag, msg.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
+      .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
       .setDescription(`${message.author} I set your AFK: ${afkmsg}`)
 
     message.channel.send(embed).then(m => {
