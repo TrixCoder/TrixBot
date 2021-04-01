@@ -5,7 +5,7 @@ module.exports.run = async (client,message, args) => {
     if (!args[0]) {
         user = message.guild.members.cache.get(message.author.id).user;
     } else {
-        user = message.guild.members.cache.get(args[0]).user || message.guild.members.cache.find(r => r.user.username.toLowerCase().startsWith(args.join(' ').toLowerCase()));
+        user = message.guild.members.cache.get(message.mentions.users.first().id).user || message.guild.members.cache.get(args[0]).user || message.guild.members.cache.find(r => r.user.username.toLowerCase().startsWith(args.join(' ').toLowerCase()));
     }
     let embed = new MessageEmbed()
         .setTitle(`**${user.tag}'s avatar**`)
