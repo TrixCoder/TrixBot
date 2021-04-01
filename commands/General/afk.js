@@ -22,6 +22,9 @@ module.exports.run = async (client, message, args) => {
         m += `${content[i]} `;
       }
     }
+    if(m.content.includes('@')){
+      return message.channel.send(`You can't mention anyone in your afk message.`)
+    }
     let afkmsg = args[0] ? m : 'AFK';
     let newAfk = new Afk({
       guild: message.guild.id,
