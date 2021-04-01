@@ -1,0 +1,14 @@
+{
+    "name": "trixbot",
+    "version": "0.0.1",
+    "description": "A multifunctional bot by Trixter",
+    "main": "index.js",
+    "dependencies": {
+        "discord.js": "^12.5.1",
+        "mongoose": "^5.11.13",
+        "fs": "*"
+    },
+    "engines": {
+        "node": "14.x"
+    }
+}
