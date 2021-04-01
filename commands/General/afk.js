@@ -1,5 +1,5 @@
 let Afk = require('./../../models/afk.js')
-const {MessageEmbed} = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 module.exports.run = async (client, message, args) => {
   let find = await Afk.findOne({ guild: message.guild.id, user: message.author.id });
@@ -22,9 +22,6 @@ module.exports.run = async (client, message, args) => {
       } else {
         m += `${content[i]} `;
       }
-    }
-    if (m.content.includes('@')) {
-      return message.channel.send(`You can't mention anyone in your afk message.`)
     }
     let afkmsg = args[0] ? m : 'AFK';
     let newAfk = new Afk({

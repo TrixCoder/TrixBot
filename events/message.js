@@ -10,7 +10,7 @@ module.exports = async (client, msg) => {
       let user = msg.guild.members.cache.get(find[i].user);
       let embed = new MessageEmbed()
         .setColor('RED')
-        .setAuthor(msg.author.tag, msg.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
+        .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
       return msg.channel.send(embed);
     }
@@ -18,9 +18,9 @@ module.exports = async (client, msg) => {
       let user = msg.guild.members.cache.get(find[i].user);
       let embed = new MessageEmbed()
         .setColor('RED')
-        .setAuthor(msg.author.tag, msg.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
+        .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
-      return msg.channel.send(embed);
+      return msg.channel.send(embe
     }
   }
   //if(msg.content.includes())
