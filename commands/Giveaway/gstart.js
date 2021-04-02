@@ -15,7 +15,7 @@ async function fetchReactedUsers(reaction, after) {
     return reactions.array().concat(next);
 }
 
-async function embed(channel, author, title, description, color, fields, footer, thumbnail, image, files, url) {
+async function emd(channel, author, title, description, color, fields, footer, thumbnail, image, files, url) {
     let embed = new MessageEmbed()
 
     if (author) {
@@ -77,10 +77,10 @@ module.exports.run = async (client, message, args) => {
     fail = "🛑"
 
     if (!args[0]) {
-        return embed(message.channel, {
+        return emd(message.channel, {
             name: `Giveaway Help Menu`,
             av: message.guild.iconURL({ format: "png", dynamic: true })
-        }, undefined, `Hey ${message.author}! How to use giveaway command? Here's the help for you! \n CMD: gstart\nHow to use?: \`gstart <time> <winnerCount> <prize>\` \n For example: \`gstart 1m 1w Charmander\`..`, "#F6260C", undefined, {
+        }, undefined, `Hey ${message.author}! How to use giveaway command? Here's the help for you! \n command: gstart\nHow to use?: \`gstart <time> <winnerCount> <prize>\` \n For example: \`gstart 1m 1w ItemName\`..`, "#F6260C", undefined, {
             name: `${message.author.username}`,
             av: client.user.avatarURL({ format: "png", dynamic: true })
         }).then(c => c.delete({ timeout: 30000 }));
@@ -89,7 +89,7 @@ module.exports.run = async (client, message, args) => {
     let giveawayChannel = message.channel;
 
     const giveawayDuration = ms(args[0]);
-    if (!giveawayDuration) return embed(message.channel, {
+    if (!giveawayDuration) return emd(message.channel, {
         name: `Please use the correct format: gstart 10m 1w Coins`,
         av: message.guild.iconURL({ format: "png", dynamic: true })
     }).then(c => c.delete({ timeout: 30000 }));
@@ -98,13 +98,13 @@ module.exports.run = async (client, message, args) => {
             title: 'The giveaway duration must be greater than 30s and less than 5days'
         }
     }).then(c => c.delete({ timeout: 30000 }));
-    if (!args[0].toLowerCase().match(/[1-60][s,m,h,d]/g)) return embed(message.channel, {
+    if (!args[0].toLowerCase().match(/[1-60][s,m,h,d]/g)) return emd(message.channel, {
         name: `Please use the correct format: gstart 10m 1w Coins`,
         av: message.guild.iconURL({ format: "png", dynamic: true })
     }).then(c => c.delete({ timeout: 30000 }));
 
     var wfilter = args[1].replace("w", "");
-    if (isNaN(wfilter)) return embed(message.channel, {
+    if (isNaN(wfilter)) return emd(message.channel, {
         name: `Please provide correct winners count, correct format: gstart 10m 3w ItemName`,
         av: message.guild.iconURL({ format: "png", dynamic: true })
     }).then(c => c.delete({ timeout: 30000 }));
@@ -112,7 +112,7 @@ module.exports.run = async (client, message, args) => {
     var giveawayNumberWinners = wfilter;
 
     var giveawayPrize = args.join(" ").slice(args[0].length + args[1].length + 1);
-    if (!giveawayPrize) return embed(message.channel, {
+    if (!giveawayPrize) return emd(message.channel, {
         name: `Please provide the giveaway prize, correct format: gstart 10m 3w ItemName`,
         av: message.guild.iconURL({ format: "png", dynamic: true })
     }).then(c => c.delete({ timeout: 30000 }));
