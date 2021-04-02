@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageCollector } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 let ms = require('ms');
 let GiveawaySchema = require(`./../../models/giveaway`)
 const { classToPlain } = require("class-transformer");
@@ -15,6 +15,58 @@ async function fetchReactedUsers(reaction, after) {
     return reactions.array().concat(next);
 }
 
+async function embed(channel, author, title, description, color, fields, footer, thumbnail, image, files, url) {
+    let embed = new MessageEmbed()
+
+    if (author) {
+        if (typeof author !== "object") throw new Error(`Title must be a object.`);
+        embed.setAuthor(author.name, author.av)
+    }
+
+    if (title) {
+        if (typeof title !== "string") throw new Error(`title must be a string.`);
+        embed.setTitle(title);
+    }
+
+    if (description) {
+        if (typeof description !== "string") throw new Error(`Description must be a string.`)
+        embed.setDescription(description);
+    }
+    embed.setColor(color ? color : "#05f5fc")
+
+
+    if (fields) {
+        if (Array.isArray(fields)) {
+            fields.forEach(r => {
+                embed.addField(r.name, r.value, (r.inline) ? r.inline : false);
+            });
+        }
+
+    }
+    if (footer) {
+        if (typeof footer !== "object") throw new Error(`Footer must be a object`)
+        embed.setFooter(footer.name, footer.av)
+            .setTimestamp();
+    }
+    if (thumbnail) {
+        if (typeof thumbnail !== "string") throw new Error(`Thumbnail is not a string.`);
+        embed.setThumbnail(thumbnail);
+    }
+    if (image) {
+        if (typeof image !== "string") throw new Error(`Image must be a string url.`);
+        embed.setImage(image);
+
+    }
+
+    if (files) {
+        if (Array.isArray(files)) {
+            embed.attachFiles(files);
+        }
+    }
+
+    return channel.send(embed);
+}
+
 module.exports.run = async (client, message, args) => {
     let msg = message;
     if (!message.member.hasPermission('MANAGE_GUILD') && !message.member.roles.cache.some(r => r.name === "Giveaways")) return message.channel.send('You need manage server permission or Giveaways role to use this command')
@@ -25,7 +77,7 @@ module.exports.run = async (client, message, args) => {
     fail = "🛑"
 
     if (!args[0]) {
-        return client.embed(message.channel, {
+        return embed(message.channel, {
             name: `Giveaway Help Menu`,
             av: message.guild.iconURL({ format: "png", dynamic: true })
         }, undefined, `Hey ${message.author}! How to use giveaway cmd? Here's the help for you! \n CMD: gstart\nHow to use?: \`gstart <time> <winnerCount> <prize>\` \n For example: \`gstart 1m 1w Charmander\`..`, "#F6260C", undefined, {
@@ -37,7 +89,7 @@ module.exports.run = async (client, message, args) => {
     let giveawayChannel = message.channel;
 
     const giveawayDuration = ms(args[0]);
-    if (!giveawayDuration) return client.embed(message.channel, {
+    if (!giveawayDuration) return embed(message.channel, {
         name: `Please use the correct format: gstart 10m 1w Coins`,
         av: message.guild.iconURL({ format: "png", dynamic: true })
     }).then(c => c.delete({ timeout: 30000 }));
@@ -46,13 +98,13 @@ module.exports.run = async (client, message, args) => {
             title: 'The giveaway duration must be greater than 30s and less than 5days'
         }
     }).then(c => c.delete({ timeout: 30000 }));
-    if (!args[0].toLowerCase().match(/[1-60][s,m,h,d]/g)) return client.embed(message.channel, {
+    if (!args[0].toLowerCase().match(/[1-60][s,m,h,d]/g)) return embed(message.channel, {
         name: `Please use the correct format: gstart 10m 1w Coins`,
         av: message.guild.iconURL({ format: "png", dynamic: true })
     }).then(c => c.delete({ timeout: 30000 }));
 
     var wfilter = args[1].replace("w", "");
-    if (isNaN(wfilter)) return client.embed(message.channel, {
+    if (isNaN(wfilter)) return embed(message.channel, {
         name: `Please provide correct winners count, correct format: gstart 10m 3w ItemName`,
         av: message.guild.iconURL({ format: "png", dynamic: true })
     }).then(c => c.delete({ timeout: 30000 }));
@@ -60,7 +112,7 @@ module.exports.run = async (client, message, args) => {
     var giveawayNumberWinners = wfilter;
 
     var giveawayPrize = args.join(" ").slice(args[0].length + args[1].length + 1);
-    if (!giveawayPrize) return client.embed(message.channel, {
+    if (!giveawayPrize) return embed(message.channel, {
         name: `Please provide the giveaway prize, correct format: gstart 10m 3w ItemName`,
         av: message.guild.iconURL({ format: "png", dynamic: true })
     }).then(c => c.delete({ timeout: 30000 }));
