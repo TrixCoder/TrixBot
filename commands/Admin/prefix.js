@@ -5,7 +5,7 @@ let config = require(`./../../config`)
 module.exports.run = async (client, message, args) => {
     const guild = await Guild.findOne({ id: message.guild.id });
     if (!guild) {
-        const server = new Guild({ guild: message.guild.id, prefix: args[0] });
+        const server = new Guild({ guild: message.guild.id, prefix: config.prefix });
         await server.save();
     }
 
