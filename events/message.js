@@ -26,7 +26,7 @@ module.exports = async (client, msg) => {
   }
   //if(msg.content.includes())
   const guild = await Guild.findOne({ guild: msg.guild.id });
-  let prefix = guild.prefix || config.prefix;
+  let prefix = guild.prefix ? guild.prefix:config.prefix;
   if (!msg.content.startsWith(prefix)) return;
 
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
