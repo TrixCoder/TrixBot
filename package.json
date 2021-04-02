@@ -5,8 +5,11 @@
     "main": "index.js",
     "dependencies": {
         "axios": "^0.21.1",
+        "class-transformer": "^0.4.0",
+        "common-tags": "^1.8.0",
         "discord.js": "^12.5.1",
         "fs": "*",
+        "moment": "^2.29.1",
         "mongoose": "^5.11.13"
     },
     "engines": {
