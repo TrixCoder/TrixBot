@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const config = require('./../config.js');
 let Afk = require('./../models/afk.js');
+let Guild = require('./../models/guild.js');
 
 module.exports = async (client, msg) => {
   if (!msg.guild || msg.author.bot) return;
@@ -24,9 +25,11 @@ module.exports = async (client, msg) => {
     }
   }
   //if(msg.content.includes())
-  if (!msg.content.startsWith(config.prefix)) return;
+  const guild = await Guild.findOne({ guild: msg.guild.id });
+  let prefix = guild.prefix || config.prefix;
+  if (!msg.content.startsWith(prefix)) return;
 
-  const args = msg.content.slice(config.prefix.length).trim().split(/ +/g);
+  const args = msg.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   const cmd = client.commands.get(command) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(command));
 
