@@ -80,8 +80,8 @@ module.exports.run = async (client, message, args) => {
         return embed(message.channel, {
             name: `Giveaway Help Menu`,
             av: message.guild.iconURL({ format: "png", dynamic: true })
-        }, undefined, `Hey ${message.author}! How to use giveaway cmd? Here's the help for you! \n CMD: gstart\nHow to use?: \`gstart <time> <winnerCount> <prize>\` \n For example: \`gstart 1m 1w Charmander\`..`, "#F6260C", undefined, {
-            name: client.config.footer(),
+        }, undefined, `Hey ${message.author}! How to use giveaway command? Here's the help for you! \n CMD: gstart\nHow to use?: \`gstart <time> <winnerCount> <prize>\` \n For example: \`gstart 1m 1w Charmander\`..`, "#F6260C", undefined, {
+            name: `${message.author.username}`,
             av: client.user.avatarURL({ format: "png", dynamic: true })
         }).then(c => c.delete({ timeout: 30000 }));
     }
