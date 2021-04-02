@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const Stock = require('../../models/stock.js');
 
 module.exports.run = async (client, message, args) => {
-    if (!message.member.hasPermission("ADMINISTRATOR")) return;
+    if(message.author.id !== message.guild.owner.id) return;
     else {
         let find = await Stock.findOne({ guild: message.guild.id });
         if (find == null) {
