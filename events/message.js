@@ -27,7 +27,7 @@ module.exports = async (client, msg) => {
   //if(msg.content.includes())
   const guild = await Guild.findOne({ guild: msg.guild.id });
   if (!guild) {
-    const server = new Guild({ guild: message.guild.id, prefix: config.prefix });
+    const server = new Guild({ guild: msg.guild.id, prefix: config.prefix });
     await server.save();
   }
   let prefix = guild.prefix ? guild.prefix : config.prefix;
