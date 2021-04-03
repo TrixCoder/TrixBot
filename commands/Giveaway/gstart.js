@@ -117,8 +117,6 @@ module.exports.run = async (client, message, args) => {
         av: message.guild.iconURL({ format: "png", dynamic: true })
     }).then(c => c.delete({ timeout: 30000 }));
 
-    let secondndCheck = await GiveawaySchema.findOne({ id: message.guild.id, channel: giveawayChannel.id, enabled: true });
-    if (secondndCheck) return message.reply(`${fail} There is already a giveaway running in that channel. Please wait for it to finish to run one more there ${fail}.`)
     let embed = new MessageEmbed()
         .setColor("#05f5fc")
         .setTitle(giveawayPrize)
@@ -150,6 +148,6 @@ module.exports.run = async (client, message, args) => {
 }
 
 module.exports.help = {
-    name: 'giveawaystart',
-    aliases: ['gstart']
+    name: 'gstart',
+    aliases: ['giveawaystart']
 }
