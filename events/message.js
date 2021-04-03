@@ -30,9 +30,9 @@ module.exports = async (client, msg) => {
     const server = new Guild({ guild: msg.guild.id, prefix: config.prefix });
     await server.save();
   }
-  let prefix = guild.prefix ? guild.prefix : config.prefix;
+  let prefix = guild.prefix || config.prefix;
+  if(prefix == null) prefix = config.prefix;
   if (!msg.content.startsWith(prefix)) return;
-
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   const cmd = client.commands.get(command) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(command));
