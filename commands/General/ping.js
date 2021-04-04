@@ -23,5 +23,8 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.help = {
     name: 'ping',
-    aliases: ['p']
+    aliases: ['p'],
+    usage: [''],
+    description: 'Get bot ping',
+    category: "General"
 }

@@ -122,5 +122,8 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.help = {
     name: 'gend',
-    aliases: ['giveawayend']
+    aliases: ['giveawayend'],
+    category: 'Giveaway',
+    usage: ['gend <message id>'],
+    description: 'End a particular giveaway'
 }

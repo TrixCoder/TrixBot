@@ -8,7 +8,6 @@ module.exports.run = async (client, message, args) => {
         const server = new Guild({ guild: message.guild.id, prefix: config.prefix });
         await server.save();
     }
-
     let nguild = await Guild.findOne({ guild: message.guild.id });
     if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('You need Administrator permission to use this command')
     if (!args[0]) return message.channel.send(`Current Prefix: **${nguild.prefix || config.prefix}**\nTo set new prefix use: \`${nguild.prefix || config.prefix}prefix <new prefix>\``)

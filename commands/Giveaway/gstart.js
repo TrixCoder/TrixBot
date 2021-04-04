@@ -149,5 +149,8 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.help = {
     name: 'gstart',
-    aliases: ['giveawaystart']
+    aliases: ['giveawaystart'],
+    category: 'Giveaway',
+    usage: ['gstart <time> <winners amount> <prize name>'],
+    description: 'Start a particular giveaway'
 }

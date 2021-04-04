@@ -18,5 +18,8 @@ module.exports.run = async (client,message, args) => {
 
 module.exports.help = {
     name: 'avatar',
-    aliases: ['av']
+    aliases: ['av'],
+    usage: ['[@user]'],
+    description: `Check your's/other people's avatar`,
+    category: 'General'
 }
