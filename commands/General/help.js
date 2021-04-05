@@ -14,7 +14,7 @@ module.exports.run = async (client, message, args) => {
     if (args[0]) {
         let command = client.commands.get(args[0]) ? client.commands.get(args[0]) : 'Invalid command';
         let helpDesc;
-        
+
         if (command == "Invalid command") helpDesc = command;
         else {
             let c = command;
@@ -87,7 +87,16 @@ module.exports.run = async (client, message, args) => {
                 pageCategory = "General"
             }
             if (page == 1) {
+                pageCategory = "Fun"
+            }
+            if (page == 2) {
                 pageCategory = "Giveaway"
+            }
+            if (page == 3) {
+                pageCategory = "Admin"
+            }
+            if (page == 4) {
+                pageCategory = "Nitro"
             }
             client.commands.forEach(c => {
                 if (c.help.category == pageCategory) {
@@ -96,7 +105,7 @@ module.exports.run = async (client, message, args) => {
             });
             let embed = new MessageEmbed()
                 .setColor('GREEN')
-                .setTitle(`${pageCategory} - Help`)
+                .setTitle(`${pageCategory} commands - Help`)
                 .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
                 .setDescription(pageContent)
             await pg.edit(embed);
@@ -109,7 +118,16 @@ module.exports.run = async (client, message, args) => {
                 pageCategory = "General"
             }
             if (page == 1) {
+                pageCategory = "Fun"
+            }
+            if (page == 2) {
                 pageCategory = "Giveaway"
+            }
+            if (page == 3) {
+                pageCategory = "Admin"
+            }
+            if (page == 4) {
+                pageCategory = "Nitro"
             }
             client.commands.forEach(c => {
                 if (c.help.category == pageCategory) {
