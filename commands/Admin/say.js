@@ -22,5 +22,9 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.help = {
   name: 'say',
-  aliases: ['s']
+  aliases: [''],
+  usage: ['<message>'],
+  example: ['Hello!'],
+  description: "Make bot say anything",
+  category: "Admin"
 }

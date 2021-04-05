@@ -124,6 +124,7 @@ module.exports.help = {
     name: 'gend',
     aliases: ['giveawayend'],
     category: 'Giveaway',
-    usage: ['gend <message id>'],
-    description: 'End a particular giveaway'
+    usage: ['<message id>'],
+    description: 'End a particular giveaway',
+    example: ['828479749436866601']
 }

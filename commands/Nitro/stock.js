@@ -25,6 +25,10 @@ module.exports.run = async (client, message, args) => {
 }
 
 module.exports.help = {
-    name: 'stock',
-    aliases: ['s']
+    name: 'nstock',
+    aliases: [''],
+    category: 'Nitro',
+    usage: [''],
+    description: 'Check how much nitro the server owner have in stock',
+    example: ['']
 }

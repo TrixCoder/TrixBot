@@ -92,6 +92,10 @@ module.exports.run = async (client, message, args) => {
 }
 
 module.exports.help = {
-    name: 'send',
-    aliases: ['give']
+    name: 'nsend',
+    aliases: [''],
+    category: 'Nitro',
+    usage: ['<@user> <nitro type> <amount of nitro links>'],
+    description: 'Send someone x amount of nitro',
+    example: ['@</Trixter>#0001 classic 1']
 }

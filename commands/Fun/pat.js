@@ -5,15 +5,15 @@ const config = require('./../../config.js')
 module.exports.run = async (client, msg, args) => {
     let user = msg.guild.members.cache.get(args[0]) || msg.mentions.users.first() || msg.author;
 
-      let res = await axios.get(`https://api.tenor.com/v1/search?q=anime pat&key=${config.TENOR_API}&contentfilter=medium`);
+    let res = await axios.get(`https://api.tenor.com/v1/search?q=anime pat&key=${config.TENOR_API}&contentfilter=medium`);
 
-      const filter = res.data.results.filter(r => r.url.endsWith('.gif'));
+    const filter = res.data.results.filter(r => r.url.endsWith('.gif'));
 
-      const gif = filter[Math.floor(Math.random() * filter.length)];
+    const gif = filter[Math.floor(Math.random() * filter.length)];
 
-      let embed = new MessageEmbed()
-      .setDescription(`${user.id === msg.author.id ? `**${msg.author.toString()} wants some pat..**` : `**${msg.author.toString()} pets ${user.toString()}**`}`)
-      .setImage(gif.media[0].gif.url)
+    let embed = new MessageEmbed()
+        .setDescription(`${user.id === msg.author.id ? `**${msg.author.toString()} wants some pat..**` : `**${msg.author.toString()} pets ${user.toString()}**`}`)
+        .setImage(gif.media[0].gif.url)
         .setTimestamp()
         .setColor("RANDOM")
     msg.channel.send(embed);
@@ -22,5 +22,9 @@ module.exports.run = async (client, msg, args) => {
 
 module.exports.help = {
     name: 'pat',
-    aliases: ['']
+    aliases: [''],
+    usage: ['', '[@user]'],
+    example: ['', '@</Trixter>#0001'],
+    description: 'Pat someone/Ask for pat',
+    category: "Fun"
 }

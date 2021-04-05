@@ -81,6 +81,10 @@ module.exports.run = async (client, message, args) => {
 }
 
 module.exports.help = {
-    name: 'add',
-    aliases: ['a']
+    name: 'nadd',
+    aliases: [''],
+    category: 'Nitro',
+    usage: ['<nitro type> <nitro gift link>'],
+    description: 'Add a nitro in stock',
+    example: ['classic https://discord.gift/1ddd12sdfdsf3r']
 }

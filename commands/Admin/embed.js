@@ -9,11 +9,11 @@ module.exports.run = async (client, message, args) => {
   if (!args[0]) return message.reply("You didn't specify a Message.");
   else {
     let content;
-    if(['RED', 'BLUE', 'GREEN','PINK', 'BLACK', 'ORANGE', 'PURPLE', 'YELLOW'].includes(args[0])){
-      content  = args.slice(1);
+    if (['RED', 'BLUE', 'GREEN', 'PINK', 'BLACK', 'ORANGE', 'PURPLE', 'YELLOW'].includes(args[0])) {
+      content = args.slice(1);
     }
-    else{
-      content  = args.slice(0);
+    else {
+      content = args.slice(0);
     }
     let msg = "";
     for (let i = 0; i < content.length; i++) {
@@ -32,5 +32,9 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.help = {
   name: 'embed',
-  aliases: ['em']
+  aliases: ['em'],
+  usage: ['<message>'],
+  example: ['Hello!'],
+  description: "Send an embed message.",
+  category: "Admin"
 }

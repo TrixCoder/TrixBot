@@ -22,5 +22,9 @@ module.exports.run = async (client, msg, args) => {
 
 module.exports.help = {
     name: 'hug',
-    aliases: ['']
+    aliases: [''],
+    usage: ['','[@user]'],
+    example: ['', '@</Trixter>#0001'],
+    description: 'Hug someone/Ask for hugs',
+    category: "Fun"
 }

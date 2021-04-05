@@ -47,7 +47,8 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'afk',
   aliases: [''],
-  usage: ['[AFK Message]'],
+  usage: ['', '[AFK Message]'],
+  example: ['', 'Playing GTA V'],
   description: "Set/Reset afk",
   category: "General"
 }

@@ -151,6 +151,7 @@ module.exports.help = {
     name: 'gstart',
     aliases: ['giveawaystart'],
     category: 'Giveaway',
-    usage: ['gstart <time> <winners amount> <prize name>'],
-    description: 'Start a particular giveaway'
+    usage: ['<time> <winners amount> <prize name>'],
+    description: 'Start a particular giveaway',
+    example: ['1d 1w Nitro Classic']
 }
