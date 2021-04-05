@@ -71,8 +71,8 @@ module.exports.run = async (client, message, args) => {
         .setTitle(`${pageCategory} commands - Help`)
         .setDescription(pageContent)
     let pg = await message.channel.send(embed)
-    await pg.react('⏭️');
     await pg.react('⏮️');
+    await pg.react('⏭️');
     const collector = pg.createReactionCollector(
         (reaction, user) => ['⏭️', '⏮️'].includes(reaction.emoji.name) && user.id === message.author.id,
         { time: 60000 }
@@ -82,6 +82,12 @@ module.exports.run = async (client, message, args) => {
         if (reaction.emoji.name == '⏭️') {
             await reaction.users.remove(user.id);
             page += 1;
+            if (page < 0) {
+                page = 4;
+            }
+            if (page > 4) {
+                page = 0;
+            }
             pageContent = "";
             if (page == 0) {
                 pageCategory = "General"
@@ -97,12 +103,6 @@ module.exports.run = async (client, message, args) => {
             }
             if (page == 4) {
                 pageCategory = "Nitro"
-            }
-            if (page < 0) {
-                page = 4;
-            }
-            if (page > 4) {
-                page = 0;
             }
             client.commands.forEach(c => {
                 if (c.help.category == pageCategory) {
@@ -119,6 +119,12 @@ module.exports.run = async (client, message, args) => {
         if (reaction.emoji.name == '⏮️') {
             await reaction.users.remove(user.id);
             page -= 1;
+            if (page < 0) {
+                page = 4;
+            }
+            if (page > 4) {
+                page = 0;
+            }
             pageContent = "";
             if (page == 0) {
                 pageCategory = "General"
@@ -134,12 +140,6 @@ module.exports.run = async (client, message, args) => {
             }
             if (page == 4) {
                 pageCategory = "Nitro"
-            }
-            if (page < 0) {
-                page = 4;
-            }
-            if (page > 4) {
-                page = 0;
             }
             client.commands.forEach(c => {
                 if (c.help.category == pageCategory) {
