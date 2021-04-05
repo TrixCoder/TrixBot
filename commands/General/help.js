@@ -68,7 +68,7 @@ module.exports.run = async (client, message, args) => {
     let embed = new MessageEmbed()
         .setColor('GREEN')
         .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
-        .setTitle(`${pageCategory} - Help`)
+        .setTitle(`${pageCategory} commands - Help`)
         .setDescription(pageContent)
     let pg = await message.channel.send(embed)
     await pg.react('⏭️');
@@ -138,7 +138,7 @@ module.exports.run = async (client, message, args) => {
             });
             let embed = new MessageEmbed()
                 .setColor('GREEN')
-                .setTitle(`${pageCategory} - Help`)
+                .setTitle(`${pageCategory} commands - Help`)
                 .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
                 .setDescription(pageContent)
             await pg.edit(embed);
