@@ -98,6 +98,12 @@ module.exports.run = async (client, message, args) => {
             if (page == 4) {
                 pageCategory = "Nitro"
             }
+            if (page < 0) {
+                page = 4;
+            }
+            if (page > 4) {
+                page = 0;
+            }
             client.commands.forEach(c => {
                 if (c.help.category == pageCategory) {
                     pageContent += `${prefix}${c.help.name} - ${c.help.description}\n\n`;
@@ -128,6 +134,12 @@ module.exports.run = async (client, message, args) => {
             }
             if (page == 4) {
                 pageCategory = "Nitro"
+            }
+            if (page < 0) {
+                page = 4;
+            }
+            if (page > 4) {
+                page = 0;
             }
             client.commands.forEach(c => {
                 if (c.help.category == pageCategory) {
