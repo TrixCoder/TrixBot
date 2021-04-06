@@ -30,6 +30,13 @@ module.exports = async (client, msg) => {
     }
     let prefix = guild.prefix || config.prefix;
     if (prefix == null) prefix = config.prefix;
+    if (msg.mentions.has(client.user) && (!msg.mentions.everyone && !msg.mentions.here)) {
+      let embed = new MessageEmbed()
+        .setColor('BLUE')
+        .setAuthor(msg.author.tag, msg.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
+        .setDescription(`My prefix is \`${prefix}\`.`);
+        msg.channel.send(embed);
+    }
     if (!msg.content.startsWith(prefix)) return;
     const args = msg.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
