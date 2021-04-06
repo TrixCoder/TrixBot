@@ -15,7 +15,7 @@ module.exports = async (client, msg) => {
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
       msg.channel.send(embed).then(m => {
         m.delete({ timeout: 10000 });
-      });;
+      }).catch(err => { console.log(err) });
     }
     else if (msg.content.includes(`<@!${find[i].user}>`) && msg.author.id !== find[i].user) {
       let user = msg.guild.members.cache.get(find[i].user);
@@ -25,7 +25,7 @@ module.exports = async (client, msg) => {
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
       msg.channel.send(embed).then(m => {
         m.delete({ timeout: 10000 });
-      });;
+      }).catch(err => { console.log(err) });
     }
     else if (msg.content.includes(`<@${find[i].user}>`) && msg.author.id !== find[i].user) {
       let user = msg.guild.members.cache.get(find[i].user);
@@ -35,7 +35,7 @@ module.exports = async (client, msg) => {
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
       msg.channel.send(embed).then(m => {
         m.delete({ timeout: 10000 });
-      });;
+      }).catch(err => { console.log(err) });
     }
   }
   //if(msg.content.includes())
