@@ -17,26 +17,6 @@ module.exports = async (client, msg) => {
         setTimeout(() => m.delete(), 10000);
       }).catch(err => { console.log(err) });
     }
-    else if (msg.content.includes(`<@!${find[i].user}>`) && msg.author.id !== find[i].user) {
-      let user = msg.guild.members.cache.get(find[i].user);
-      let embed = new MessageEmbed()
-        .setColor('RED')
-        .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
-        .setDescription(`${user.user} is AFK: ${find[i].message}`)
-      msg.channel.send(embed).then(m => {
-        setTimeout(() => m.delete(), 10000);
-      }).catch(err => { console.log(err) });
-    }
-    else if (msg.content.includes(`<@${find[i].user}>`) && msg.author.id !== find[i].user) {
-      let user = msg.guild.members.cache.get(find[i].user);
-      let embed = new MessageEmbed()
-        .setColor('RED')
-        .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
-        .setDescription(`${user.user} is AFK: ${find[i].message}`)
-      msg.channel.send(embed).then(m => {
-        setTimeout(() => m.delete(), 10000);
-      }).catch(err => { console.log(err) });
-    }
   }
   //if(msg.content.includes())
   const guild = await Guild.findOne({ guild: msg.guild.id });
