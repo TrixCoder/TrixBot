@@ -14,7 +14,7 @@ module.exports = async (client, msg) => {
         .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
       msg.channel.send(embed).then(m => {
-        m.delete({ timeout: 10000 });
+        setTimeout(() => m.delete(), 10000);
       }).catch(err => { console.log(err) });
     }
     else if (msg.content.includes(`<@!${find[i].user}>`) && msg.author.id !== find[i].user) {
@@ -24,7 +24,7 @@ module.exports = async (client, msg) => {
         .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
       msg.channel.send(embed).then(m => {
-        m.delete({ timeout: 10000 });
+        setTimeout(() => m.delete(), 10000);
       }).catch(err => { console.log(err) });
     }
     else if (msg.content.includes(`<@${find[i].user}>`) && msg.author.id !== find[i].user) {
@@ -34,7 +34,7 @@ module.exports = async (client, msg) => {
         .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
       msg.channel.send(embed).then(m => {
-        m.delete({ timeout: 10000 });
+        setTimeout(() => m.delete(), 10000);
       }).catch(err => { console.log(err) });
     }
   }
