@@ -7,7 +7,7 @@ module.exports = async (client, msg) => {
   if (!msg.guild || msg.author.bot) return;
   let find = await Afk.find({ guild: msg.guild.id });
   for (let i = 0; i < find.length; i++) {
-    if (msg.mentions.has(msg.guild.members.cache.get(find[i].user).user) && !msg.mentions.everyone && !msg.mentions.here) {
+    if (msg.mentions.has(msg.guild.members.cache.get(find[i].user).user) && !msg.mentions.everyone && !msg.mentions.here && msg.author.id !== find[i].user) {
       let user = msg.guild.members.cache.get(find[i].user);
       let embed = new MessageEmbed()
         .setColor('RED')
