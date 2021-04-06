@@ -13,23 +13,29 @@ module.exports = async (client, msg) => {
         .setColor('RED')
         .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
-      return msg.channel.send(embed);
+      msg.channel.send(embed).then(m => {
+        m.delete({ timeout: 10000 });
+      });;
     }
-    if (msg.content.includes(`<@!${find[i].user}>`) && msg.author.id !== find[i].user) {
+    else if (msg.content.includes(`<@!${find[i].user}>`) && msg.author.id !== find[i].user) {
       let user = msg.guild.members.cache.get(find[i].user);
       let embed = new MessageEmbed()
         .setColor('RED')
         .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
-      return msg.channel.send(embed);
+      msg.channel.send(embed).then(m => {
+        m.delete({ timeout: 10000 });
+      });;
     }
-    if (msg.content.includes(`<@${find[i].user}>`) && msg.author.id !== find[i].user) {
+    else if (msg.content.includes(`<@${find[i].user}>`) && msg.author.id !== find[i].user) {
       let user = msg.guild.members.cache.get(find[i].user);
       let embed = new MessageEmbed()
         .setColor('RED')
         .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
         .setDescription(`${user.user} is AFK: ${find[i].message}`)
-      return msg.channel.send(embed);
+      msg.channel.send(embed).then(m => {
+        m.delete({ timeout: 10000 });
+      });;
     }
   }
   //if(msg.content.includes())
