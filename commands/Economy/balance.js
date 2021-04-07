@@ -1,6 +1,6 @@
-const { MessageEmbed } = require('discord.js');
-const Economy = require("./../../models/economy");
-const Guild = require("./../../models/guild");
+let { MessageEmbed } = require('discord.js');
+let Economy = require("./../../models/economy");
+let Guild = require("./../../models/guild");
 let config = require(`./../../config`)
 
 module.exports.run = async (client, msg, args) => {

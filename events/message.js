@@ -8,17 +8,19 @@ module.exports = async (client, msg) => {
   let find = await Afk.find({ guild: msg.guild.id });
   let spc = 0;
   for (let i = 0; i < find.length; i++) {
-    if (msg.mentions.has(msg.guild.members.cache.get(find[i].user).user) && !msg.mentions.everyone && !msg.mentions.here && msg.author.id !== find[i].user) {
-      let user = msg.guild.members.cache.get(find[i].user);
-      let embed = new MessageEmbed()
-        .setColor('RED')
-        .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
-        .setDescription(`${user.user} is AFK: ${find[i].message}`);
+    if (find[i].user) {
+      if (msg.mentions.has(msg.guild.members.cache.get(find[i].user).user) && !msg.mentions.everyone && !msg.mentions.here && msg.author.id !== find[i].user) {
+        let user = msg.guild.members.cache.get(find[i].user);
+        let embed = new MessageEmbed()
+          .setColor('RED')
+          .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
+          .setDescription(`${user.user} is AFK: ${find[i].message}`);
 
-      spc = 1;
-      msg.channel.send(embed).then(m => {
-        setTimeout(() => m.delete(), 10000);
-      }).catch(err => { console.log(err) });
+        spc = 1;
+        msg.channel.send(embed).then(m => {
+          setTimeout(() => m.delete(), 10000);
+        }).catch(err => { console.log(err) });
+      }
     }
   }
   //if(msg.content.includes())
@@ -28,14 +30,14 @@ module.exports = async (client, msg) => {
       const server = new Guild({ guild: msg.guild.id, prefix: config.prefix });
       await server.save();
     }
-    let prefix = guild.prefix || config.prefix;
+    let prefix = guild.prefix.toLowerCase() || config.prefix;
     if (prefix == null) prefix = config.prefix;
     if (msg.mentions.has(client.user) && (!msg.mentions.everyone && !msg.mentions.here)) {
       let embed = new MessageEmbed()
         .setColor('BLUE')
         .setAuthor(msg.author.tag, msg.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
         .setDescription(`My prefix is \`${prefix}\`.`);
-        msg.channel.send(embed);
+      msg.channel.send(embed);
     }
     if (!msg.content.startsWith(prefix)) return;
     const args = msg.content.slice(prefix.length).trim().split(/ +/g);

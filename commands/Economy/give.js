@@ -1,7 +1,7 @@
-const { MessageEmbed } = require('discord.js');
-const Economy = require("./../../models/economy");
-const Guild = require("./../../models/guild");
-const ms = require('ms');
+let { MessageEmbed } = require('discord.js');
+let Economy = require("./../../models/economy");
+let Guild = require("./../../models/guild");
+let ms = require('ms');
 let config = require(`./../../config`)
 
 module.exports.run = async (client, msg, args) => {
@@ -52,6 +52,6 @@ module.exports.help = {
     aliases: [''],
     usage: ['<@user> amount'],
     example: ['@</Trixter>#0001 '],
-    description: "Claim daily reward",
+    description: "Send someone money from your balance",
     category: "Economy"
 }

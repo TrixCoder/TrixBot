@@ -83,9 +83,9 @@ module.exports.run = async (client, message, args) => {
             await reaction.users.remove(user.id);
             page += 1;
             if (page < 0) {
-                page = 4;
+                page = 5;
             }
-            if (page > 4) {
+            if (page > 5) {
                 page = 0;
             }
             pageContent = "";
@@ -96,12 +96,15 @@ module.exports.run = async (client, message, args) => {
                 pageCategory = "Fun"
             }
             if (page == 2) {
-                pageCategory = "Giveaway"
+                pageCategory = "Economy"
             }
             if (page == 3) {
-                pageCategory = "Admin"
+                pageCategory = "Giveaway"
             }
             if (page == 4) {
+                pageCategory = "Admin"
+            }
+            if (page == 5) {
                 pageCategory = "Nitro"
             }
             client.commands.forEach(c => {
@@ -120,9 +123,9 @@ module.exports.run = async (client, message, args) => {
             await reaction.users.remove(user.id);
             page -= 1;
             if (page < 0) {
-                page = 4;
+                page = 5;
             }
-            if (page > 4) {
+            if (page > 5) {
                 page = 0;
             }
             pageContent = "";
@@ -133,12 +136,15 @@ module.exports.run = async (client, message, args) => {
                 pageCategory = "Fun"
             }
             if (page == 2) {
-                pageCategory = "Giveaway"
+                pageCategory = "Economy"
             }
             if (page == 3) {
-                pageCategory = "Admin"
+                pageCategory = "Giveaway"
             }
             if (page == 4) {
+                pageCategory = "Admin"
+            }
+            if (page == 5) {
                 pageCategory = "Nitro"
             }
             client.commands.forEach(c => {

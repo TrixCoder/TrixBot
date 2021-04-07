@@ -1,7 +1,7 @@
-const { MessageEmbed } = require('discord.js');
-const Economy = require("./../../models/economy");
-const Guild = require("./../../models/guild");
-const ms = require('ms');
+let { MessageEmbed } = require('discord.js');
+let Economy = require("./../../models/economy");
+let Guild = require("./../../models/guild");
+let ms = require('ms');
 let config = require(`./../../config`)
 
 module.exports.run = async (client, msg, args) => {
@@ -26,7 +26,7 @@ module.exports.run = async (client, msg, args) => {
     let m = date_format.getMonth()
     let d = date_format.getDate() - 1
     let y = date_format.getFullYear()
-    
+
     let daily = user.daily_lastUsed;
 
     if (daily !== null && timeout - (Date.now() - daily) > 0) {
@@ -41,7 +41,7 @@ module.exports.run = async (client, msg, args) => {
         await user.save();
 
         return msg.channel.send(new MessageEmbed()
-            .setColor('RANDOM')
+            .setColor('BLUE')
             .setAuthor(msg.author.tag, msg.author.avatarURL({ dynamic: true, size: 4096, format: 'png' }))
             .setDescription(`You've collected your daily reward of ${CURRENCY}${amount}.`));
     }
