@@ -6,9 +6,22 @@ let Guild = require('./../models/guild.js');
 module.exports = async (client, msg) => {
   if (!msg.guild || msg.author.bot) return;
   let find = await Afk.find({ guild: msg.guild.id });
-  let spc = 0;
   for (let i = 0; i < find.length; i++) {
     if (find[i].user) {
+      if (msg.author.id == find[i].user && find[i].type == "auto") {
+        let user = msg.guild.members.cache.get(find[i].user);
+        await Afk.findOneAndDelete({ guild: msg.guild.id, user: find[i].user }, (err, res) => {
+          if (err) return message.channel.send(err);
+        })
+        let embed = new MessageEmbed()
+          .setColor('RED')
+          .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
+          .setDescription(`Welcome back ${user.user}, I removed your AFK`);
+
+        msg.channel.send(embed).then(m => {
+          setTimeout(() => m.delete(), 10000);
+        }).catch(err => { console.log(err) });
+      }
       if (msg.mentions.has(msg.guild.members.cache.get(find[i].user).user) && !msg.mentions.everyone && !msg.mentions.here && msg.author.id !== find[i].user) {
         let user = msg.guild.members.cache.get(find[i].user);
         let embed = new MessageEmbed()
@@ -16,7 +29,6 @@ module.exports = async (client, msg) => {
           .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
           .setDescription(`${user.user} is AFK: ${find[i].message}`);
 
-        spc = 1;
         msg.channel.send(embed).then(m => {
           setTimeout(() => m.delete(), 10000);
         }).catch(err => { console.log(err) });
@@ -24,33 +36,31 @@ module.exports = async (client, msg) => {
     }
   }
   //if(msg.content.includes())
-  if (spc == 0) {
-    const guild = await Guild.findOne({ guild: msg.guild.id });
-    if (!guild) {
-      const server = new Guild({ guild: msg.guild.id, prefix: config.prefix });
-      await server.save();
-    }
-    let prefix = guild.prefix.toLowerCase() || config.prefix;
-    if (prefix == null) prefix = config.prefix;
-    if (msg.mentions.has(client.user) && (!msg.mentions.everyone && !msg.mentions.here)) {
-      let embed = new MessageEmbed()
-        .setColor('BLUE')
-        .setAuthor(msg.author.tag, msg.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
-        .setDescription(`My prefix is \`${prefix}\`.`);
-      msg.channel.send(embed);
-    }
-    if (!msg.content.startsWith(prefix)) return;
-    const args = msg.content.slice(prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
-    const cmd = client.commands.get(command) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(command));
+  const guild = await Guild.findOne({ guild: msg.guild.id });
+  if (!guild) {
+    const server = new Guild({ guild: msg.guild.id, prefix: config.prefix });
+    await server.save();
+  }
+  let prefix = guild.prefix ? guild.prefix:config.prefix;
+  if (prefix == null) prefix = config.prefix;
+  if (msg.mentions.has(client.user) && (!msg.mentions.everyone && !msg.mentions.here)) {
+    let embed = new MessageEmbed()
+      .setColor('BLUE')
+      .setAuthor(msg.author.tag, msg.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
+      .setDescription(`My prefix is \`${prefix}\`.`);
+    msg.channel.send(embed);
+  }
+  if (!msg.content.startsWith(prefix)) return;
+  const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+  const cmd = client.commands.get(command) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(command));
 
-    if (!cmd) return;
+  if (!cmd) return;
 
-    try {
-      cmd.run(client, msg, args);
-    } catch (e) {
-      console.error(e);
-      return msg.channel.send('An error occured while trying to execute the command!')
-    }
+  try {
+    cmd.run(client, msg, args);
+  } catch (e) {
+    console.error(e);
+    return msg.channel.send('An error occured while trying to execute the command!')
   }
 }
