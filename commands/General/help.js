@@ -60,9 +60,11 @@ module.exports.run = async (client, message, args) => {
     if (page == 0) {
         pageCategory = "General"
     }
+    let cn = 0;
     client.commands.forEach(c => {
         if (c.help.category == pageCategory) {
-            pageContent += `${prefix}${c.help.name} - ${c.help.description}\n\n`;
+            cn += 1;
+            pageContent += `${cn}) ${prefix}${c.help.name} - ${c.help.description}\n\n`;
         }
     });
     let embed = new MessageEmbed()
@@ -107,9 +109,11 @@ module.exports.run = async (client, message, args) => {
             if (page == 5) {
                 pageCategory = "Nitro"
             }
+            let cn = 0;
             client.commands.forEach(c => {
                 if (c.help.category == pageCategory) {
-                    pageContent += `${prefix}${c.help.name} - ${c.help.description}\n\n`;
+                    cn += 1;
+                    pageContent += `${cn}) ${prefix}${c.help.name} - ${c.help.description}\n\n`;
                 }
             });
             let embed = new MessageEmbed()
@@ -147,11 +151,11 @@ module.exports.run = async (client, message, args) => {
             if (page == 5) {
                 pageCategory = "Nitro"
             }
+            let cn = 0;
             client.commands.forEach(c => {
                 if (c.help.category == pageCategory) {
-                    if (c.help.category == pageCategory) {
-                        pageContent += `${prefix}${c.help.name} - ${c.help.description}\n\n`;
-                    }
+                    cn += 1;
+                    pageContent += `${cn}) ${prefix}${c.help.name} - ${c.help.description}\n\n`;
                 }
             });
             let embed = new MessageEmbed()
