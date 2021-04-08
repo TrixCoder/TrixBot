@@ -13,14 +13,9 @@ module.exports = async (client, msg) => {
         await Afk.findOneAndDelete({ guild: msg.guild.id, user: find[i].user }, (err, res) => {
           if (err) return message.channel.send(err);
         })
-        let embed = new MessageEmbed()
-          .setColor('RED')
-          .setAuthor(user.user.tag, user.user.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
-          .setDescription(`Welcome back ${user.user}, I removed your AFK`);
-
-        msg.channel.send(embed).then(m => {
-          setTimeout(() => m.delete(), 10000);
-        }).catch(err => { console.log(err) });
+        msgchannel.send(`Welcome back ${message.author}, I removed your AFK`).then(m => {
+          m.delete({ timeout: 10000 });
+        });
       }
       if (msg.mentions.has(msg.guild.members.cache.get(find[i].user).user) && !msg.mentions.everyone && !msg.mentions.here && msg.author.id !== find[i].user) {
         let user = msg.guild.members.cache.get(find[i].user);
@@ -41,7 +36,7 @@ module.exports = async (client, msg) => {
     const server = new Guild({ guild: msg.guild.id, prefix: config.prefix });
     await server.save();
   }
-  let prefix = guild.prefix ? guild.prefix:config.prefix;
+  let prefix = guild.prefix ? guild.prefix : config.prefix;
   if (prefix == null) prefix = config.prefix;
   if (msg.mentions.has(client.user) && (!msg.mentions.everyone && !msg.mentions.here)) {
     let embed = new MessageEmbed()
