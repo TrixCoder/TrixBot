@@ -74,8 +74,8 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
     name: 'delete-item',
     aliases: [''],
-    usage: [''],
-    example: [''],
+    usage: ['itemName', `itemID`],
+    example: ['test', `1`],
     description: "Delete a shop item.",
     category: "Economy"
 }
