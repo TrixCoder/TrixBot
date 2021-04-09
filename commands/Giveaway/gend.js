@@ -5,6 +5,19 @@ const { classToPlain } = require("class-transformer");
 const { stripIndentTransformer } = require("common-tags");
 const moment = require("moment");
 
+async function shuffle(arr) {
+    for (let i = arr.length; i; i--) {
+        const j = Math.floor(Math.random() * i);
+        [arr[i - 1], arr[j]] = [arr[j], arr[i - 1]];
+    }
+    return arr;
+}
+
+async function draw(list) {
+    const shuffled = shuffle(list);
+    return shuffled[Math.floor(Math.random() * shuffled.length)];
+}
+
 async function fetchReactedUsers(reaction, after) {
     const opts = { limit: 100, after };
     const reactions = await reaction.users.fetch(opts);
