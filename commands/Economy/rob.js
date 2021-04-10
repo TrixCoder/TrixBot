@@ -47,7 +47,7 @@ module.exports.run = async (client, msg, args) => {
         if (user.id == author.id) {
             return msg.reply(`You can't rob yourself lol`)
         }
-        if (victim == null) return msg.reply(`${user.tag} don't have an inventory in this bot.`)
+        if (victim == null) return msg.reply(`${user} don't have an inventory in this bot.`)
         if (victim.balance < 1) {
             return msg.reply(`You can't rob ${user} because there is no money left in ${user}'s account`)
         }

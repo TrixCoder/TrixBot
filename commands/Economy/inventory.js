@@ -16,27 +16,28 @@ module.exports.run = async (client, msg, args) => {
     }
     guild = await Guild.findOne({ guild: msg.guild.id });
     let CURRENCY = guild.currency;
-    let shop = guild.shop;
-    let reply = "**Shop items:**\n\n";
+    let user = await Economy.findOne({ guild: msg.guild.id, id: msg.author.id });
+    let shop = user.inv;
+    console.log(shop)
+    let reply = "**Inventory items:**\n\n";
     for (let i = 0; i < shop.length; i++) {
-        reply += `**__ID:__ ${i+1}** — **__Name:__** ${shop[i].item_emoji ? `${shop[i].item_emoji} `: ``}**${shop[i].item_name}** — **__Price:__ ${shop[i].item_price}${CURRENCY}**\n**__Description:__** ${shop[i].item_description}\n\n`;
+        reply += `**__ID:__ ${i + 1}** — **__Name:__** ${shop[i].item_emoji ? `${shop[i].item_emoji} ` : ``}**${shop[i].item_name}** — **__Quantity:__ ${shop[i].quantity}**\n**__Description:__** ${shop[i].item_description}\n\n`;
         if (shop[i] == null || !shop[i]) {
-            reply = `No items in shop`;
+            reply = `No items in inventory`;
         }
     }
     if (shop.length == 0 || !shop) {
-        reply = `No items in shop`;
+        reply = `No items in inventory`;
     }
     return msg.channel.send(new MessageEmbed()
         .setColor('BLUE')
         .setAuthor(msg.guild.name, msg.guild.iconURL({ dynamic: true, size: 4096, format: 'png' }))
         .setDescription(reply)
-        .setThumbnail(`https://media.discordapp.net/attachments/822817558490120192/829723534069858364/Untitled_22.png`)
         .setTimestamp());
 }
 
 module.exports.help = {
-    name: 'shop',
+    name: 'inventory',
     aliases: [''],
     usage: [''],
     example: [''],

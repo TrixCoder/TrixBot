@@ -13,7 +13,7 @@ module.exports = async (client, msg) => {
         await Afk.findOneAndDelete({ guild: msg.guild.id, user: find[i].user }, (err, res) => {
           if (err) return message.channel.send(err);
         })
-        msg.channel.send(`Welcome back ${message.author}, I removed your AFK`).then(m => {
+        msg.channel.send(`Welcome back ${msg.author}, I removed your AFK`).then(m => {
           m.delete({ timeout: 10000 });
         });
       }

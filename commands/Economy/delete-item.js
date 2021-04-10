@@ -2,7 +2,8 @@ const { MessageEmbed } = require('discord.js');
 let Guild = require("./../../models/guild");
 
 module.exports.run = async (client, message, args) => {
-    let usage = '``delete-item itemName/itemID``.'
+    if (!msg.member.hasPermission('MANAGE_GUILD')) return message.channel.send('You need \`MANAGE_GUILD\` permission to use this command');
+    let usage = '`delete-item itemName/itemID`.'
     let embed = new MessageEmbed()
         .setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true, size: 4096, format: 'png' }))
         .setTitle('Success!')
@@ -46,14 +47,14 @@ module.exports.run = async (client, message, args) => {
     if (isNaN(args[0]) && !items.includes(args[0])) {
         embed.setTitle('Failed!')
         embed.setColor('RED')
-        embed.setDescription(`Invalid item name/item doesn't exists.`)
+        embed.setDescription(`Invalid item name/item name.`)
         return message.channel.send(embed)
     }
     if (!isNaN(args[0])) {
         if (shop.length > args[0]) {
             embed.setTitle('Failed!')
             embed.setColor('RED')
-            embed.setDescription(`Invalid item id/item with this id doesn't exists.`)
+            embed.setDescription(`Invalid item id/item name.`)
             return message.channel.send(embed)
         }
         shop.pop(shop[args[0] - 1]);

@@ -24,9 +24,9 @@ module.exports.run = async (client, msg, args) => {
             member = msg.guild.members.cache.get(args[0]).user;
         }
     }
-    let user = await Economy.findOne({ id: member.id });
+    let user = await Economy.findOne({ id: member.id, guild: msg.guild.id });
     if (!user) {
-        user = new Economy({ id: member.id, balance: 500 });
+        user = new Economy({ id: member.id, balance: 500, guild: msg.guild.id });
         await user.save();
     }
 

@@ -3,6 +3,7 @@ let Guild = require("./../../models/guild");
 let config = require(`./../../config`)
 
 module.exports.run = async (client, message, args) => {
+    if (!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('You need \`MANAGE_GUILD\` permission to use this command');
     let guild = await Guild.findOne({ guild: message.guild.id });
     if (!guild) {
         guild = new Guild({ guild: message.guild.id, currency: config.currency, prefix: config.prefix });
@@ -58,7 +59,7 @@ module.exports.run = async (client, message, args) => {
             cost = parseInt(message2.content);
 
             type = 'emoji';
-            embed.addField(`**Cost**`, `${CURRENCY} ${cost}`, true)
+            embed.addField(`**Cost**`, `${cost}${CURRENCY}`, true)
 
 
             return msg.edit(`What will be the item emoji?\nType null/none if you don't want any.`, embed);
@@ -69,8 +70,8 @@ module.exports.run = async (client, message, args) => {
             msg.edit(embed);
 
             collector.stop();
-            if (emoji.toLowerCase() == "null") emoji = null;
-            if (emoji.toLowerCase() == "none") emoji = null;
+            if (emoji == "null") emoji = null;
+            if (emoji == "none") emoji = null;
             shop.push(
                 {
                     item_name: name,
