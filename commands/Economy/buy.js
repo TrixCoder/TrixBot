@@ -1,7 +1,7 @@
 const { MessageEmbed, Message, MessageCollector, UserManager } = require('discord.js');
-let Guild = require("./../../models/guild");
-let config = require(`./../../config`)
-let Economy = require("./../../models/economy");
+let Guild = require("../../models/guild");
+let config = require(`../../config`)
+let Economy = require("../../models/economy");
 
 module.exports.run = async (client, message, args) => {
     let guild = await Guild.findOne({ guild: message.guild.id });
@@ -102,7 +102,7 @@ module.exports.run = async (client, message, args) => {
                 }
             }
         }
-        else if (invExist == false) {
+        if (invExist == false) {
             let item = shop[args[0] - 1];
             if (args[1] && !isNaN(args[1])) {
                 itemPrice = parseInt(shop[args[0] - 1].item_price) * parseInt(args[1]);
@@ -122,6 +122,7 @@ module.exports.run = async (client, message, args) => {
             }
         }
         user.balance -= itemPrice;
+        await user.save();
     } else {
         for (let i = 0; i < shop.length; i++) {
             if (shop[i].item_name == args[0]) {
@@ -151,7 +152,7 @@ module.exports.run = async (client, message, args) => {
                         }
                     }
                 }
-                else if (invExist == false) {
+                if (invExist == false) {
                     let item = shop[i];
                     if (args[1] && !isNaN(args[1])) {
                         itemPrice = parseInt(shop[args[0] - 1].item_price) * parseInt(args[1]);
@@ -171,6 +172,7 @@ module.exports.run = async (client, message, args) => {
                     }
                 }
                 user.balance -= itemPrice;
+                await user.save();
             }
         }
     }
@@ -181,7 +183,7 @@ module.exports.run = async (client, message, args) => {
 
 
 module.exports.help = {
-    name: 'buy-item',
+    name: 'buy',
     aliases: [''],
     usage: [''],
     example: [''],

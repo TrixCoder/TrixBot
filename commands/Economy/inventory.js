@@ -18,10 +18,9 @@ module.exports.run = async (client, msg, args) => {
     let CURRENCY = guild.currency;
     let user = await Economy.findOne({ guild: msg.guild.id, id: msg.author.id });
     let shop = user.inv;
-    console.log(shop)
     let reply = "**Inventory items:**\n\n";
     for (let i = 0; i < shop.length; i++) {
-        reply += `**__ID:__ ${i + 1}** — **__Name:__** ${shop[i].item_emoji ? `${shop[i].item_emoji} ` : ``}**${shop[i].item_name}** — **__Quantity:__ ${shop[i].quantity}**\n**__Description:__** ${shop[i].item_description}\n\n`;
+        reply += `**__ID:__ ${i + 1}** — **__Name:__** ${shop[i].item_emoji ? `${shop[i].item_emoji} ` : ``}**${shop[i].item_name}** — **__Quantity:__ ${shop[i].quantity}**\n${shop[i].item_description}\n\n`;
         if (shop[i] == null || !shop[i]) {
             reply = `No items in inventory`;
         }

@@ -46,7 +46,7 @@ module.exports.run = async (client, message, args) => {
                     example += `<a:next:823926486989275156> \`${prefix}${c.help.name} ${c.help.example[i]}\`\n`;
                 }
             }
-            helpDesc = `Name: \`${c.help.name}\`\nCategory: \`${c.help.category}\`\nDescription: \`${c.help.description}\`\n${alias && !alias == '``' && !alias == '' ? `Alias: ${alias}\n` : ``}Usage: \n${usage}\nExample: \n${example}\n\n`;
+            helpDesc = `Name: \`${c.help.name}\`\nCategory: \`${c.help.category}\`\nDescription: \`${c.help.description}\`\n${alias && !alias.endsWith('``') ? `Alias: ${alias}\n` : ``}Usage: \n${usage}\nExample: \n${example}\n\n`;
         }
         let embed = new MessageEmbed()
             .setColor('GREEN')

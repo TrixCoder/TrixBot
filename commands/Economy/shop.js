@@ -19,7 +19,7 @@ module.exports.run = async (client, msg, args) => {
     let shop = guild.shop;
     let reply = "**Shop items:**\n\n";
     for (let i = 0; i < shop.length; i++) {
-        reply += `**__ID:__ ${i+1}** — **__Name:__** ${shop[i].item_emoji ? `${shop[i].item_emoji} `: ``}**${shop[i].item_name}** — **__Price:__ ${shop[i].item_price}${CURRENCY}**\n**__Description:__** ${shop[i].item_description}\n\n`;
+        reply += `**__ID:__ ${i+1}** — **__Name:__** ${shop[i].item_emoji ? `${shop[i].item_emoji} `: ``}**${shop[i].item_name}** — **__Price:__ ${shop[i].item_price}${CURRENCY}**\n${shop[i].item_description}\n\n`;
         if (shop[i] == null || !shop[i]) {
             reply = `No items in shop`;
         }

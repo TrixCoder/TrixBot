@@ -37,6 +37,7 @@ module.exports.run = async (client, message, args) => {
     let type = 'name';
     let name, description, cost, emoji;
     collector.on('collect', async (message2) => {
+        message2.delete();
         if (message2.content.toLowerCase() === 'cancel') return collector.stop('cancelled');
         if (type === 'name') {
             name = message2.content;
