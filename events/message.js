@@ -1,10 +1,15 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Collection } = require('discord.js');
 const config = require('./../config.js');
 let Afk = require('./../models/afk.js');
 let Guild = require('./../models/guild.js');
+const Level = require('./../models/level.js');
 
 module.exports = async (client, msg) => {
   if (!msg.guild || msg.author.bot) return;
+  const result = await Level.findOne({ id: msg.author.id, guildID: msg.guild.id }) || new Level({ id: msg.author.id, guildID: msg.guild.id });
+
+  await updateXp(msg, result);
+
   let find = await Afk.find({ guild: msg.guild.id });
   for (let i = 0; i < find.length; i++) {
     if (find[i].user) {
@@ -58,4 +63,31 @@ module.exports = async (client, msg) => {
     console.error(e);
     return msg.channel.send('An error occured while trying to execute the command!')
   }
+}
+
+async function updateXp(msg, result) {
+
+  const points = parseInt(result.xp);
+  const level = parseInt(result.level);
+
+  const won = Math.floor(Math.random() * (Math.floor(15) - Math.ceil(5))) + Math.ceil(5);
+
+  const newXp = parseInt(points + won, 10);
+
+  const neededXp = 10 * (level * level) + 90 * level + 100;
+
+  result.xp = parseInt(newXp, 10);
+
+  if (newXp > neededXp) {
+
+    result.level = parseInt(level + 1, 10);
+    result.xp = 0;
+    msg.channel.send(`GG ${msg.author.toString()}, you just advanced to ${result.level}!`);
+  }
+
+  await result.save();
+}
+
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }

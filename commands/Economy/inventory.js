@@ -40,6 +40,6 @@ module.exports.help = {
     aliases: [''],
     usage: [''],
     example: [''],
-    description: "Check shop",
+    description: "Check your inventory",
     category: "Economy"
 }
