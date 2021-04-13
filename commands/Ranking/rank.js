@@ -7,10 +7,8 @@ module.exports.run = async (client, msg, args) => {
     let member = msg.guild.members.cache.get(usr.id);
 
     const result = await Level.findOne({ id: member.id }) || await new Level({ id: member.id }).save().catch(console.error);
-
-    const rankIndex = (await Level.find({})).sort((a, b) => b.xp - a.xp).findIndex(res => res.id === member.id) + 1;
-
     const level = result.level;
+    const rankIndex = (await Level.find({})).sort((a, b) => b.level*b.xp - a.level*a.xp).findIndex(res => res.id === member.id) + 1;
 
     const tempXp = Math.pow(level * 4, 2);
 
