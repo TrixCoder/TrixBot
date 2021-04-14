@@ -82,7 +82,7 @@ async function updateXp(msg, result) {
 
     result.level = parseInt(level + 1, 10);
     result.xp = 0;
-    msg.channel.send(`GG ${msg.author.toString()}, you just advanced to level ${result.level}!`);
+    msg.channel.send(`Congratulations ${msg.author.toString()} 🎉! You have just advanced to level ${result.level}!`);
   }
 
   await result.save();
