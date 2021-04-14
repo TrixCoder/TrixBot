@@ -8,8 +8,6 @@ module.exports.run = async (client, msg, args) => {
 
     const result = await Level.findOne({ id: member.id }) || await new Level({ id: member.id }).save().catch(console.error);
 
-    const rankIndex = (await Level.find({})).sort((a, b) => b.xp - a.xp).findIndex(res => res.id === member.id) + 1;
-
     const level = result.level;
 
     const tempXp = Math.pow(level * 4, 2);
@@ -17,6 +15,9 @@ module.exports.run = async (client, msg, args) => {
     const currentXp = result.xp;
 
     const neededXp = 10 * (level * level) + 90 * level + 100;
+
+    const rankIndex = (await Level.find({})).sort((a, b) => (b.xp+(10 * (b.level * b.level) + 90 * b.level + 100)) - (a.xp+(10 * (a.level * a.level) + 90 * a.level + 100))).findIndex(res => res.id === member.id) + 1;
+
     let message = msg;
     const channel = message.channel;
 
