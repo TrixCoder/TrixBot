@@ -27,6 +27,6 @@ module.exports.help = {
     aliases: [''],
     usage: ['<@user>'],
     example: ['@</Trixter>#0001'],
-    description: 'Slap someone',
+    description: 'Tickle someone',
     category: "Fun"
 }
