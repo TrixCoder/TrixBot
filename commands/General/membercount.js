@@ -44,7 +44,7 @@ module.exports.help = {
     name: 'membercount',
     aliases: ['mc'],
     usage: ['', 'detailed'],
-    example: [''],
+    example: ['', 'detailed'],
     description: 'Get server membercount',
     category: "General"
 }
