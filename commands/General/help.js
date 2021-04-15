@@ -15,7 +15,53 @@ module.exports.run = async (client, message, args) => {
         let command = client.commands.get(args[0]) ? client.commands.get(args[0]) : 'Invalid command';
         let helpDesc;
 
-        if (command == "Invalid command") helpDesc = command;
+        if (command == "Invalid command") {
+            let as = [];
+            client.commands.forEach(c => {
+                as.push(c.help)
+            });
+            for (let j = 0; j < as.length; j++) {
+                if (isNaN(args[0]) && as[j].aliases.includes(args[0].toLowerCase())) {
+                    let alias = "";
+                    let usage = "";
+                    let example = "";
+
+                    for (let i = 0; i < as[j].aliases.length; i++) {
+                        if (i == as[j].aliases.length - 1) {
+                            alias += `\`${as[j].aliases[i]}\``;
+                        }
+                        else {
+                            alias += `\`${as[j].aliases[i]}\`, `;
+                        }
+                    }
+                    for (let i = 0; i < as[j].usage.length; i++) {
+                        if (i == as[j].usage.length - 1) {
+                            usage += `<a:next:823926486989275156> \`${prefix}${as[j].name} ${as[j].usage[i]}\`\n`;
+                        }
+                        else {
+                            usage += `<a:next:823926486989275156> \`${prefix}${as[j].name} ${as[j].usage[i]}\`\n`;
+                        }
+                    }
+                    for (let i = 0; i < as[j].example.length; i++) {
+                        if (i == as[j].example.length - 1) {
+                            example += `<a:next:823926486989275156> \`${prefix}${as[j].name} ${as[j].example[i]}\`\n`;
+                        }
+                        else {
+                            example += `<a:next:823926486989275156> \`${prefix}${as[j].name} ${as[j].example[i]}\`\n`;
+                        }
+                    }
+                    helpDesc = `Name: \`${as[j].name}\`\nCategory: \`${as[j].category}\`\nDescription: \`${as[j].description}\`\n${alias && !alias.endsWith('``') ? `Alias: ${alias}\n` : ``}Usage: \n${usage}\nExample: \n${example}\n\n`;
+                    let embed = new MessageEmbed()
+                        .setColor('GREEN')
+                        .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
+                        .setDescription(helpDesc)
+                    return message.channel.send(embed)
+                }
+                else {
+                    helpDesc = command
+                }
+            }
+        }
         else {
             let c = command;
             let alias = "";
