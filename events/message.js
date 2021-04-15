@@ -51,6 +51,7 @@ module.exports = async (client, msg) => {
     msg.channel.send(embed);
   }
   if (!msg.content.startsWith(prefix)) return;
+  if(msg.content.endsWith(prefix)) return;
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   const cmd = client.commands.get(command) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(command));
