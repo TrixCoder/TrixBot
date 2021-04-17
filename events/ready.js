@@ -18,7 +18,7 @@ module.exports = async (client) => {
           let user = client.users.cache.get(afk[i].user);
           let server = client.guilds.cache.get(afk[i].guild);
           user.send(`Removed your afk of ${afk[i].message} in ${server.name}.`)
-          await Afk.findOneAndDelete({ guild: afk[i].guild, user: afk[i].user }, (err, res) => {
+          await AfkSchema.findOneAndDelete({ guild: afk[i].guild, user: afk[i].user }, (err, res) => {
             if (err) return console.log(err);
           })
         }
