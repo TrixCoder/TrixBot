@@ -4,5 +4,6 @@ module.exports = mongoose.model("Afk", new mongoose.Schema({
   message: String,
   user: String,
   guild: String,
-  type: String
+  type: String,
+  timer: { type: Number, default: null }
 }));

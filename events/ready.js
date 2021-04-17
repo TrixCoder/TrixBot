@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 let GiveawaySchema = require(`./../models/giveaway`)
+let AfkSchema = require(`./../models/afk`)
 const { MessageEmbed } = require('discord.js');
 
 module.exports = async (client) => {
@@ -10,7 +11,22 @@ module.exports = async (client) => {
   ].join('\n'));
   client.user.setActivity("in Trixter Community");
   setInterval(async () => {
-    const Giveaways = await GiveawaySchema.find({ enabled: true });
+    let afk = await AfkSchema.find({});
+    for (let i = 0; i < afk.length; i++) {
+      if (afk[i].timer !== null) {
+        if (Date.now() > afk[i].timer) {
+          let user = client.users.cache.get(afk[i].user);
+          let server = client.guilds.cache.get(afk[i].guild);
+          user.send(`Removed your afk of ${afk[i].message} in ${server.name}.`)
+          await Afk.findOneAndDelete({ guild: afk[i].guild, user: afk[i].user }, (err, res) => {
+            if (err) return console.log(err);
+          })
+        }
+      }
+    }
+  }, 60000);
+  setInterval(async () => {
+    let Giveaways = await GiveawaySchema.find({ enabled: true });
     if (!Giveaways) return;
     Giveaways.forEach(async (giveaway) => {
       const embed = new MessageEmbed(giveaway.embed);
