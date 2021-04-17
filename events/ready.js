@@ -24,7 +24,7 @@ module.exports = async (client) => {
         }
       }
     }
-  }, 60000);
+  }, 10000);
   setInterval(async () => {
     let Giveaways = await GiveawaySchema.find({ enabled: true });
     if (!Giveaways) return;

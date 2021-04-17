@@ -74,7 +74,7 @@ module.exports.run = async (client, message, args) => {
       let embed = new MessageEmbed()
         .setColor('GREEN')
         .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
-        .setDescription(`${message.author} I set your AFK: ${afkmsg} and will remove it in ${ms(giveawayDuration + Date.now())}.`)
+        .setDescription(`${message.author} I set your AFK: ${afkmsg} and will remove it in ${args[0]}.`)
 
       message.channel.send(embed).then(mg => {
         mg.delete({ timeout: 10000 });
