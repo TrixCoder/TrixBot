@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args) => {
   else {
     let content;
     let m = "";
-    if (args[0] && args[0].toLowerCase() == "auto") {
+    if (args[0] && args[0].toLowerCase() == "normal") {
       content = args.slice(1);
       for (let i = 0; i < content.length; i++) {
         if (i == content.length - 1) {
@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args) => {
       let newAfk = new Afk({
         guild: message.guild.id,
         user: message.author.id,
-        type: "auto",
+        type: "normal",
         message: afkmsg
       });
       await newAfk.save();
@@ -57,7 +57,7 @@ module.exports.run = async (client, message, args) => {
     let newAfk = new Afk({
       guild: message.guild.id,
       user: message.author.id,
-      type: "normal",
+      type: "auto",
       message: afkmsg
     });
     await newAfk.save();
@@ -78,8 +78,8 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'afk',
   aliases: [''],
-  usage: ['', '[AFK Message]', 'auto [AFK Message]'],
-  example: ['', 'Playing GTA V', 'auto Playing GTA V'],
+  usage: ['', '[AFK Message]', 'normal [AFK Message]'],
+  example: ['', 'Playing GTA V', 'normal Playing GTA V'],
   description: "Set/Reset afk/autoafk",
   category: "General"
 }

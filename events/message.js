@@ -54,7 +54,7 @@ module.exports = async (client, msg) => {
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   const cmd = client.commands.get(command) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(command));
-  if(msg.content.endsWith(prefix) && !cmd) return;
+  if(msg.content == prefix) return;
   
   if (!cmd) return;
 
