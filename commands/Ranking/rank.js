@@ -6,7 +6,7 @@ module.exports.run = async (client, msg, args) => {
     let usr = msg.mentions.users.first() || msg.author;
     let member = msg.guild.members.cache.get(usr.id);
 
-    const result = await Level.findOne({ id: member.id }) || await new Level({ id: member.id }).save().catch(console.error);
+    const result = await Level.findOne({ id: member.id, guildID: msg.guild.id }) || await new Level({ id: member.id, guildID: msg.guild.id }).save().catch(console.error);
 
     const level = result.level;
 
@@ -21,9 +21,9 @@ module.exports.run = async (client, msg, args) => {
     let message = msg;
     const channel = message.channel;
 
-    let user = await Level.findOne({ id: member.id });
+    let user = await Level.findOne({ id: member.id, guildID: msg.guild.id });
     if (!user) user = new Level({ id: member.id, custom_bg: undefined });
-    user = await Level.findOne({ id: member.id });
+    user = await Level.findOne({ id: member.id, guildID: msg.guild.id });
     let bg = user.custom_bg;
     member = member.user;
     const rank = new canvacord.Rank()
