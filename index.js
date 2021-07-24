@@ -15,6 +15,7 @@ const client = new Discord.Client({
 });
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
+require('discord-buttons')(client);
 
 fs.readdirSync('./commands').forEach(dir => {
 	const commands = fs.readdirSync(`./commands/${dir}/`).filter(file => file.endsWith(".js"));
@@ -23,12 +24,6 @@ fs.readdirSync('./commands').forEach(dir => {
 		client.commands.set(command.help.name, command)
 	}
 })
-/* const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
-} */
 
 fs.readdir(`${process.cwd()}/events/`, (err, files) => {
     files.forEach(file => {

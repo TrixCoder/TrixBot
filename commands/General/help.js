@@ -1,6 +1,7 @@
 let { MessageEmbed } = require('discord.js')
 let Guild = require(`./../../models/guild`)
 let config = require(`./../../config`)
+let { MessageButton } = require('discord-buttons')
 
 module.exports.run = async (client, message, args) => {
     const guild = await Guild.findOne({ guild: message.guild.id });
@@ -100,121 +101,74 @@ module.exports.run = async (client, message, args) => {
             .setDescription(helpDesc)
         return message.channel.send(embed)
     }
-    let page = 0;
-    let pageContent = "";
-    let pageCategory = "";
-    if (page == 0) {
-        pageCategory = "General"
-    }
-    let cn = 0;
-    client.commands.forEach(c => {
-        if (c.help.category == pageCategory) {
-            cn += 1;
-            pageContent += `${cn}) ${prefix}${c.help.name} - ${c.help.description}\n\n`;
-        }
-    });
-    let embed = new MessageEmbed()
-        .setColor('GREEN')
-        .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
-        .setTitle(`${pageCategory} commands - Help`)
-        .setDescription(pageContent)
-    let pg = await message.channel.send(embed)
-    await pg.react('⏮️');
-    await pg.react('⏭️');
-    const collector = pg.createReactionCollector(
-        (reaction, user) => ['⏭️', '⏮️'].includes(reaction.emoji.name) && user.id === message.author.id,
-        { time: 60000 }
-    )
 
-    collector.on('collect', async (reaction, user) => {
-        if (reaction.emoji.name == '⏭️') {
-            await reaction.users.remove(user.id);
-            page += 1;
-            if (page < 0) {
-                page = 5;
-            }
-            if (page > 5) {
-                page = 0;
-            }
-            pageContent = "";
-            if (page == 0) {
-                pageCategory = "General"
-            }
-            if (page == 1) {
-                pageCategory = "Fun"
-            }
-            if (page == 2) {
-                pageCategory = "Economy"
-            }
-            if (page == 3) {
-                pageCategory = "Giveaway"
-            }
-            if (page == 4) {
-                pageCategory = "Admin"
-            }
-            if (page == 5) {
-                pageCategory = "Nitro"
-            }
-            let cn = 0;
-            client.commands.forEach(c => {
-                if (c.help.category == pageCategory) {
-                    cn += 1;
-                    pageContent += `${cn}) ${prefix}${c.help.name} - ${c.help.description}\n\n`;
-                }
-            });
-            let embed = new MessageEmbed()
-                .setColor('GREEN')
-                .setTitle(`${pageCategory} commands - Help`)
-                .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
-                .setDescription(pageContent)
-            await pg.edit(embed);
-        }
-        if (reaction.emoji.name == '⏮️') {
-            await reaction.users.remove(user.id);
-            page -= 1;
-            if (page < 0) {
-                page = 5;
-            }
-            if (page > 5) {
-                page = 0;
-            }
-            pageContent = "";
-            if (page == 0) {
-                pageCategory = "General"
-            }
-            if (page == 1) {
-                pageCategory = "Fun"
-            }
-            if (page == 2) {
-                pageCategory = "Economy"
-            }
-            if (page == 3) {
-                pageCategory = "Giveaway"
-            }
-            if (page == 4) {
-                pageCategory = "Admin"
-            }
-            if (page == 5) {
-                pageCategory = "Nitro"
-            }
-            let cn = 0;
-            client.commands.forEach(c => {
-                if (c.help.category == pageCategory) {
-                    cn += 1;
-                    pageContent += `${cn}) ${prefix}${c.help.name} - ${c.help.description}\n\n`;
-                }
-            });
-            let embed = new MessageEmbed()
-                .setColor('GREEN')
-                .setTitle(`${pageCategory} commands - Help`)
-                .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
-                .setDescription(pageContent)
-            await pg.edit(embed);
+    // page code
+    let pageCategories = [];
+    let page = 0;
+    client.commands.forEach(c => {
+        let found = pageCategories.find(category => category === c.help.category);
+        if (!found) {
+            pageCategories.push(c.help.category);
         }
     })
-    collector.on('end', async (reaction, user) => {
-        pg.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
-    });
+    let pageContent = await loadContent(client, prefix, pageCategories[page]);
+
+    let firstbutton = new MessageButton()
+        .setStyle("green")
+        .setID("1")
+        .setLabel("<")
+
+    let secondbutton = new MessageButton().setStyle("blurple").setID("2").setLabel(">")
+
+    var buttonarray = [firstbutton, secondbutton]
+    let embed = new MessageEmbed()
+        .setTitle(`${pageCategories[page]} commands - Help`)
+        .setColor("RANDOM")
+        .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true, format: 'png', size: 4096 }))
+        .setDescription(pageContent)
+
+    let mybuttonsmsg = await message.channel.send({ embed: embed, buttons: buttonarray })
+
+    const collector = mybuttonsmsg.createButtonCollector((button) => button.clicker.user.id === message.author.id, { time: 60e3 });
+
+    collector.on("collect", async (b) => {
+        b.reply.defer();
+        if (b.id == "3") {
+            page = 0;
+            embed.setTitle(`${pageCategories[page]} commands - Help`)
+            embed.setDescription(pageContent)
+            mybuttonsmsg.edit({ embed: embed, buttons: buttonarray })
+        }
+        else if (b.id == "1") {
+            if (page !== 0) {
+                --page;
+                pageContent = await loadContent(client, prefix, pageCategories[page]);
+                embed.setTitle(`${pageCategories[page]} commands - Help`)
+                embed.setDescription(pageContent)
+                mybuttonsmsg.edit({ embed: embed, buttons: buttonarray })
+            } else {
+                page = pageCategories.length - 1;
+                embed.setTitle(`${pageCategories[page]} commands - Help`)
+                embed.setDescription(pageContent)
+                mybuttonsmsg.edit({ embed: embed, buttons: buttonarray })
+            }
+        }
+        else if (b.id == "2") {
+            if (page < pageCategories.length - 1) {
+                page++;
+                pageContent = await loadContent(client, prefix, pageCategories[page]);
+                embed.setTitle(`${pageCategories[page]} commands - Help`)
+                embed.setDescription(pageContent)
+                mybuttonsmsg.edit({ embed: embed, buttons: buttonarray })
+            } else {
+                page = 0;
+                embed.setTitle(`${pageCategories[page]} commands - Help`)
+                embed.setDescription(pageContent)
+                mybuttonsmsg.edit({ embed: embed, buttons: buttonarray })
+            }
+        }
+    })
+
 }
 
 module.exports.help = {
@@ -224,4 +178,17 @@ module.exports.help = {
     example: ['', 'ping'],
     description: 'Get details of commands/a particular command',
     category: "General"
+}
+
+
+async function loadContent(client, prefix, field) {
+    let cn = 0;
+    let pagec = "";
+    client.commands.forEach(c => {
+        if (c.help.category === field) {
+            cn += 1;
+            pagec += `${cn}) ${prefix}${c.help.name} - ${c.help.description}\n\n`;
+        }
+    });
+    return pagec;
 }
