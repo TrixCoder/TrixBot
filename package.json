@@ -12,7 +12,7 @@
         "discord.js": "^12.5.1",
         "fs": "*",
         "moment": "^2.29.1",
-        "mongoose": "^5.11.13",
+        "mongoose": "^5.13.20",
         "parse-ms": "^2.1.0"
     },
     "engines": {
