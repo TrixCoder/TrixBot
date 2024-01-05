@@ -4,7 +4,7 @@
     "description": "A multifunctional bot by Trixter",
     "main": "index.js",
     "dependencies": {
-        "axios": "^0.21.1",
+        "axios": "^1.6.4",
         "canvacord": "^5.1.0",
         "class-transformer": "^0.4.0",
         "common-tags": "^1.8.0",
